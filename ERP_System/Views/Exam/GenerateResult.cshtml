@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "Generate Result";
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model ExamModel
+
+@using (@Html.BeginForm("GenerateResult", "Exam", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Result</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                </div>
+                <h2 class="panel-title">Exam Details</h2>
+            </header>
+            <div class="panel-body">
+                @Html.Label("* City", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.CID, new SelectList(Model.ListCity, "CID", "Name"), "--Select City--", new { @class = "form-control", @id = "ddlCity" })
+                    @Html.ValidationMessageFor(m => m.CID)
+                </div>
+                @Html.Label("* Zone", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.ZID, new SelectList(Model.ListZone, "ZID", "Name"), "--Select Zone--", new { @class = "form-control", @id = "ddlZone" })
+                    @Html.ValidationMessageFor(m => m.ZID)
+                </div>
+                <div class="col-sm-12" style="height: 5px;"></div>
+
+                @Html.Label("* School", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.SchoolID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control", @id = "ddlSchool" })
+                    @Html.ValidationMessageFor(m => m.SchoolID)
+                </div>
+                @Html.Label("* Standard", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.StdID, new SelectList(Model.ListStd, "StdID", "Standard"), "--Select Standard--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.StdID)
+                </div>
+                <div class="col-sm-12" style="height: 5px;"></div>
+                @Html.Label("* Exam", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.EID, new SelectList(Model.ListExam, "EID", "Name"), "--Select Exam--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EID)
+                </div>
+                @Html.Label("Student", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.StudID, new SelectList(Model.ListStud, "StudID", "FirstName"), "--Select Student--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.StudID)
+                </div>
+                <div class="col-sm-12" style="height: 15px;"></div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <input type="submit" value="View Mark Sheet" id="btnSave" name="cmd" class="btn btn-primary" />
+                    @*@Html.ActionLink(" Print Result", "GetResult", new { }, new { @class = "btn btn-primary", @target = "_blank", @title = "Generate Result" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script lang="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        $("#StdID").change(function () {
+            $("#divLoading").show();
+            debugger;
+            var school = $('#ddlSchool').val();
+            var std = $('#StdID').val();
+            $.ajax(
+            {
+                url: '@Url.Action("FillStud", "Exam")',
+                        type: "GET",
+                        datatype: "JSON",
+                        data: { SID: school,StdID:std },
+
+                        success: function (user) {
+                            debugger;
+
+                            $("#StudID").html("");  // clear before appending new list 
+                            $("#StudID").append("<option value=''>--Select Student--</option>");
+                            $.each(user, function (i, CreatedBy) {
+
+                                $("#StudID").append(
+
+                                    $('<option></option>').val(CreatedBy.StudID).html(CreatedBy.FirstName + ' ' + CreatedBy.MiddleName + ' ' + CreatedBy.LastName));
+                                $("#divLoading").hide();
+                            });
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert(errorThrown);
+                            $("#divLoading").hide();
+                        }
+
+                    });
+            $("#divLoading").hide();
+
+
+
+            $.ajax(
+           {
+               url: '@Url.Action("FillExam", "Exam")',
+                type: "GET",
+                datatype: "JSON",
+                data: { SID: school, StdID: std },
+
+                success: function (user) {
+                    debugger;
+
+                    $("#EID").html("");  // clear before appending new list 
+                    $("#EID").append("<option value=''>--Select Exam--</option>");
+                    $.each(user, function (i, CreatedBy) {
+
+                        $("#EID").append(
+
+                            $('<option></option>').val(CreatedBy.EID).html(CreatedBy.Name));
+                        $("#divLoading").hide();
+                    });
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                    $("#divLoading").hide();
+                }
+
+            });
+            $("#divLoading").hide();
+            });
+    });
+    </script>

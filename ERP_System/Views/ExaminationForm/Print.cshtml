@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model StudentModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print</title>
+    <!-- Bootstrap -->
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/print.css" rel="stylesheet" media="print" />
+</head>
+<body>
+    <div class="col-sm-12" style="text-align: center;">
+        @foreach (var i in Model.ListStud)
+        {                         
+            <div id="dvMain" class="col-sm-12" style="height: 977px;">
+                <h2><b>DISTRICT INSTITUTE OF EDUCATION AND TRAININGS</b></h2>
+                <h3><b>@i.DistDetail.Name,KASHMIR</b></h3>
+                <h3><b>CLASS @i.StdDetail.Standard</b></h3>
+                <div class="col-sm-4"></div>
+                <div id="dvHead" class="col-sm-4" >
+                    <h3  style="background-color: black; color: white; text-align: center;">EXAMINATION FORM</h3>
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8" style="text-align: left;">
+                    <br />
+                    <br />
+
+                    <b>Roll No. :</b>&nbsp; @i.RollNo<br />
+                    <b>Registration No. : </b>&nbsp; @i.Prefix@i.StudID
+                    <br />
+                    <br />
+                    <h4><b>A) CANDIDATES PARTICULARS</b></h4>
+                    <br />
+                    <b>Name of Candidate : </b>&nbsp;@i.FirstName @i.MiddleName @i.LastName<br />
+                    <b>Father's Name :</b>&nbsp;@i.FatherName<br />
+                    <b>Mother's Name :</b>&nbsp;@i.MotherName<br />
+                    <b>Date of Birth :</b>&nbsp;@i.DOB.Value.ToString("dd/MM/yyyy")<br />
+                    <b>Zone :</b>&nbsp;@i.ZoneDetail.Name<br />
+                    <b>Institute :</b>&nbsp;<br />
+                    <br />
+                    <h4><b>B) SUBJECT TO APPEAR IN</b></h4>
+                    
+                    @{ERPEntities Dbcontext = new ERPEntities();
+                      int sid = @i.StudID;}
+
+                    @{var data = (from st in Dbcontext.SubTrans
+                                  join sm in Dbcontext.SubjectMasters on st.SubID equals sm.SubID
+                                  where st.StudID == sid && st.IsChecked == true
+                                  select new SubjectModel()
+                                  {
+                                      Subject = sm.Subject
+                                  }).ToList();
+                    }
+                    @{int count = 0;}
+                    @foreach (var s in data)
+                    {
+
+                        count++;
+                        <b>@count.&nbsp;</b>@s.Subject<br />
+
+                    }
+                </div>
+                <div class="col-sm-4">
+                    <img id="img" style="border:solid 1px;" src="@Url.Content("/PhotoUpload/Photo/" + i.Photo)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="photo" class="img-rounded thumb-image" width="100" height="100" /><br />
+                    <img id="img1" style="border:solid 1px;" src="@Url.Content("/PhotoUpload/Sign/" + i.Sign)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="sign" class="img-rounded thumb-image" width="100" height="50" /><br />
+                    <img id="img2" style="border:solid 1px;" src="@Url.Content("/PhotoUpload/Thumb/" + i.Thumb)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="thumb" class="img-rounded thumb-image" width="100" height="50" />
+                </div>
+
+                <div class="col-sm-12" style="text-align: left;">
+                     
+                            <br /><ul>
+                        <li>
+                           
+                            <b>It is to certify that each filled above are verified and found correct.</b></li>
+                    </ul>
+                </div>
+                <div class="col-sm-12" style="text-align:right;"><br /><br /><br /><b>Seal and Signature of the Head</b></div>
+            </div>            
+        }
+    </div>
+</body>
+</html>

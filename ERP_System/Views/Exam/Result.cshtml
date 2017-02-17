@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Result Master";
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model ExamModel
+
+@using (@Html.BeginForm("Result", "Exam", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Result</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                </div>
+                <h2 class="panel-title">Result Details</h2>
+            </header>
+            <div class="panel-body">
+                @Html.Label("* Code", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.QRCode, new { @class = "form-control",@id="txtCode" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" id="btnSave" type="button">Go!</button>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.QRCode)
+                </div>
+                <div class="col-sm-12" style="height:15px;"></div>
+                <div id="dvSub">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*  <script type="text/javascript">
+      window.onload = function () {
+          debugger;
+          $("#txtCode").focus();
+      }
+
+    </script>*@
+<script lang="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        //$("#btnSave").click(function () {
+        $('#txtCode').on('input', function (e) {
+            $("#divLoading").show();
+            debugger;
+            var id = $('#txtCode').val();
+            $.ajax(
+            {
+                url: '@Url.Action("getSub", "Exam")',
+                type: "GET",
+                datatype: "JSON",
+                data: { code: id },
+
+                success: function (gr) {
+                    debugger;
+                    $("#dvSub").html("");  // clear before appending new list 
+                    $("#dvSub").append(gr);
+                    $("#divLoading").hide();
+                    $("#Marks").focus();
+                }
+            });
+
+        });
+        $("#divLoading").hide();
+        $("#txtCode").focus();
+
+    });
+
+
+</script>
+

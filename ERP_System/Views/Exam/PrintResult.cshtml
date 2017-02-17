@@ -1,0 +1,217 @@
+﻿@{
+    Layout = null;
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@using ERP_Services
+@model ExamModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print Result</title>
+    <!-- Bootstrap -->
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/print.css" rel="stylesheet" media="print" />
+    <style media="print">
+        #dvHead
+    {
+        background-color: #2bdae2 !important;       
+    }
+               .table-bordered > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th
+    {
+        padding: 4px !important;
+        line-height: 1.42857143 !important;
+        vertical-align: top !important;
+        border-top: 1px solid black !important;
+        border-color:black !important;
+    }
+    </style>
+    <style>
+                       .table-bordered > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th
+    {
+        padding: 4px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid black;
+        border-color:black;
+    }
+    </style>
+
+</head>
+<body>
+
+    @{int stdID = 0;
+      int did = 0;
+      int acid = 0;
+      if (Session["DID"] != null)
+      {
+          did = Convert.ToInt32(Session["DID"].ToString());
+          acid = Convert.ToInt32(Session["ACID"].ToString());
+      }
+      ERPEntities Dbcontext = new ERPEntities();
+      stdID = Convert.ToInt32(Model.ListResult[0].StdDetail.StdID);
+      //var lstStud = Dbcontext.StudentMasters.Where(m => m.StdID == stdID).ToList();
+      int eid = Convert.ToInt32(Model.ListResult[0].EID);
+      StudentService objService = new StudentService();
+      var lstStud = objService.getStudForResult(did, acid, stdID);
+      var exam = Dbcontext.ExamMasters.Where(m => m.EID == eid).SingleOrDefault();
+      var std = Dbcontext.StandardMasters.Where(m => m.StdID == stdID).SingleOrDefault();
+    }
+
+    @foreach (var i in lstStud)
+    {
+
+        var lstRes = Model.ListResult.Where(m => m.StudID == i.StudID).ToList();
+        
+        
+        if (lstRes.Count > 0)
+        {
+        <div class="col-sm-12" style="height: 978px;border:solid 20px;border-color:#346a98">
+            <div style="text-align: center;">
+                <h4 style="text-transform: uppercase;"><b>DISTRICT INSTITUTE OF EDUCATION AND TRAININGS</b></h4>
+                <h5 style="margin-top: -6px; text-transform: uppercase;"><b>@i.DistDetail.Name , GUJARAT</b></h5>
+                <h5><b>Session : @exam.Session</b></h5>
+                <div id="dvHead" class="col-sm-12" style="background-color: #2bdae2;">
+                    <b>ACHIEVEMENT / MARKS CERTIFICATE FOR CLASS @std.Standard</b>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <br />
+                <table style="width: 100%">
+                    <tr>
+                        <td><b>Roll No. : </b></td>
+                        <td>@i.RollNo</td>
+                    </tr>
+                    <tr>
+                        <td><b>Reg.No. : </b></td>
+                        <td>@i.Prefix@i.StudID</td>
+                    </tr>
+                    <tr>
+                        <td><b>Name of Candidate : </b></td>
+                        <td>@i.FirstName @i.MiddleName @i.LastName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Father's Name : </b></td>
+                        <td>@i.FatherName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Mother's Name</b></td>
+                        <td>@i.MotherName</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Date of Birth : </b>
+                        </td>
+                        <td>@i.DOB.Value.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Zone : </b>
+                        </td>
+                        <td>
+                            @i.ZoneDetail.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>School : </b>
+                        </td>
+                        <td>
+                            @i.SchlDetail.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Declaration Date : </b>
+                        </td>
+                        <td>
+                            @System.DateTime.Now.ToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-3">
+                <br />
+                <img id="img" style="border:solid 1px;" src="@Url.Content("/PhotoUpload/Photo/" + i.Photo)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="photo" class="img-rounded thumb-image" width="100" height="100" /><br />
+                <img id="img1" style="border:solid 1px;" src="@Url.Content("/PhotoUpload/Sign/" + i.Sign)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="sign" class="img-rounded thumb-image" width="100" height="50" /><br />
+                <img id="img2" style="border:solid 1px;" src="@Url.Content("/PhotoUpload/Thumb/" + i.Thumb)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="thumb" class="img-rounded thumb-image" width="100" height="50" />
+            </div>
+            <div class="col-sm-12">
+                <br />
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Sr#</th>
+                        <th>Subjects</th>
+                        <th>Max.Marks</th>
+                        <th>Pass. Marks</th>
+                        <th>Obtained Marks</th>
+                    </tr>
+                    @{int count = 0;
+                      int total=0;
+                      int totMarks = 0;
+                      int totPassMarks = 0;}
+                    @foreach (var res in lstRes)
+                    {
+                        count++;                        
+                        
+                        <tr>
+                            <td><b>@count</b></td>
+                            <td><b>@res.SubDetail.Subject</b></td>                            
+                            <td>@string.Format("{0:0}",@res.ExamSheduleDetail.TotalMarks)</td>
+                            <td>@string.Format("{0:0}",@res.ExamSheduleDetail.PassingMarks)</td>
+                            <td class="marks">@res.Marks</td>
+                            @{totMarks += Convert.ToInt32(res.ExamSheduleDetail.TotalMarks);
+                              totPassMarks += Convert.ToInt32(res.ExamSheduleDetail.PassingMarks);
+                                total += Convert.ToInt32(res.Marks);}
+                        </tr>
+                                        
+                    }
+                    <tr>
+                        <td colspan="2"><b>Grand Total of Marks Obtained Out of</b></td>
+                        
+                        <td><b>@totMarks</b></td>
+                        <td><b>@totPassMarks</b></td>
+                        <td><b>@total</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"><table style="width:100%"><tr><td><b>Result :</b></td><td>Pass</td>
+                            <td><b>Grade : </b></td><td>Distinction</td>
+                                   </tr>                            
+                            </table></td>
+                    </tr>
+                </table>
+    <div class="col-sm-12" style="height:80px;"></div>
+                
+                <div style="text-align:center;">
+                <div class="col-sm-4">Head of the School<br />Seal & Signature</div>
+                <div class="col-sm-4">Complex Head<br />Seal & Signature</div>
+                <div class="col-sm-4">Principal<br />District Institute of Education & Trainings,Gujarat</div>
+                    </div>
+            </div>
+
+        </div>
+        }
+    }
+
+</body>
+</html>
+
+
+@*<script type="text/javascript">
+    var sum = 0;
+    // iterate through each td based on class and add the values
+    $(".marks").each(function () {
+        debugger;
+        var value = $(this).text();
+        // add only if the value is number
+        if (!isNaN(value) && value.length != 0) {
+            sum += parseFloat(value);
+            $("#lblTotal").text(sum);
+            //$("#hdnFP").val(sum);
+        }
+    });
+
+</script>*@

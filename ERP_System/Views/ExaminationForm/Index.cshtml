@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Examination Form";
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model StudentModel
+
+@using (@Html.BeginForm("Index", "Examinationform", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+
+
+    int rid = 0;
+    if (Session["RoleID"] != null)
+    { rid = Convert.ToInt32(Session["RoleID"].ToString()); }
+        
+    
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Examination Form</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <!--end col 6-->
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+
+                    @*<a href="javascript:void(0)" class="panel-action action-link btn btn-primary btn-border" ><i class="fa fa-plus-square">&nbsp;ADD NEW</i></a>*@
+
+                    @*<button type="button" class="btn btn-success btn-border">Add New</button>*@
+                    @*<button type="button" class="btn btn-success btn-border" id="btnAdd" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Add New</button>*@
+                    @*@Html.ActionLink("Create New", "AddEditRecord", "Company", null, new { @id = "openDialog", @class = "btn btn-success btn-border" })*@
+                    @*        <a href="javascript:void(0)" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
+                    <a href="javascript:void(0)" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>*@
+                    @*<div class="dropdown pull-left">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="ion-more"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-scale">
+                            <li><a href="javascript:void(0)">Action</a></li>
+                            <li><a href="javascript:void(0)">Just Action</a></li>
+                            <li><a href="javascript:void(0)">Action Now</a></li>
+                        </ul>
+                    </div>*@
+                </div>
+                <h2 class="panel-title">Examination Form Details</h2>
+            </header>
+            <div class="panel-body">
+                <div class="form-group">
+
+                    @Html.Label("* City", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.CID, new SelectList(Model.ListCity, "CID", "Name"), "--Select City--", new { @class = "form-control", @id = "ddlCity" })
+                        @Html.ValidationMessageFor(m => m.CID)
+                    </div>
+                    @Html.Label("* Zone", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.ZID, new SelectList(Model.ListZone, "ZID", "Name"), "--Select Zone--", new { @class = "form-control", @id = "ddlZone" })
+                        @Html.ValidationMessageFor(m => m.ZID)
+                    </div>
+                    <div class="col-sm-12" style="height: 5px;"></div>
+
+                    @Html.Label("* School", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.SchoolID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control", @id = "ddlSchool" })
+                        @Html.ValidationMessageFor(m => m.SchoolID)
+                    </div>
+                    @Html.Label("* Standard", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.StdID, new SelectList(Model.ListStd, "StdID", "Standard"), "--Select Standard--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.StdID)
+                    </div>
+                    
+                    <div class="col-sm-12" style="height: 15px;"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+
+                        <input type="submit" value="Print" id="btnSave" name="cmd" class="btn btn-primary" />
+                        @*<a href="/ExaminationForm/Print" class="btn btn-primary">Print</a>*@
+                        
+                        @*<input type="submit" value="Update" id="btnUpdate" name="cmd" class="btn btn-primary" />*@
+                        <a href="/Exam/Index" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+
+                <!--end panel body-->
+            </div>
+            <!--end panel-->
+            <!-- Modal -->
+
+        </div>
+    </div>
+    <!--end col 6-->
+}
+
+
+
+
+

@@ -1,0 +1,465 @@
+﻿@{
+    ViewBag.Title = "Student Registration";
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model StudentModel
+<style type="text/css">
+    .thumb-image
+    {
+        float: left;
+        width: 100px;
+        height: 110px;
+        border: 1px solid #5bc0de;
+        position: relative;
+        padding: 5px;
+    }
+</style>
+@using (@Html.BeginForm("Index", "Registration", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+@*@using (Ajax.BeginForm("AddEditRecord", "Company", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "studentDialog" }))
+{*@
+    if (Model.StudID != null && Model.StudID != 0)
+    {
+    @Html.HiddenFor(m => m.StudID)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.CreatedDate)
+    @Html.HiddenFor(m => m.Prefix)
+    @Html.HiddenFor(m => m.ACID)
+    @Html.HiddenFor(m => m.Photo)
+    @Html.HiddenFor(m => m.Sign)
+    @Html.HiddenFor(m => m.Thumb)
+    }
+    int rid = 0;
+    if (Session["RoleID"] != null)
+    { rid = Convert.ToInt32(Session["RoleID"].ToString()); }
+        
+    
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Registration</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <!--end col 6-->
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+
+                    @*<a href="javascript:void(0)" class="panel-action action-link btn btn-primary btn-border" ><i class="fa fa-plus-square">&nbsp;ADD NEW</i></a>*@
+
+                    @*<button type="button" class="btn btn-success btn-border">Add New</button>*@
+                    <button type="button" class="btn btn-success btn-border" id="btnAdd" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Add New</button>
+                    @*@Html.ActionLink("Create New", "AddEditRecord", "Company", null, new { @id = "openDialog", @class = "btn btn-success btn-border" })*@
+                    @*        <a href="javascript:void(0)" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
+                    <a href="javascript:void(0)" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>*@
+                    @*<div class="dropdown pull-left">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="ion-more"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-scale">
+                            <li><a href="javascript:void(0)">Action</a></li>
+                            <li><a href="javascript:void(0)">Just Action</a></li>
+                            <li><a href="javascript:void(0)">Action Now</a></li>
+                        </ul>
+                    </div>*@
+                </div>
+                <h2 class="panel-title">Registered Student List</h2>
+            </header>
+            <div class="panel-body">
+                <table class="table" id="tbl">
+                    <thead>
+                        <tr>
+                            <th>Reg.#</th>
+                            <th>Name</th>
+                            <th>Standard</th>
+                            <th>Roll No.</th>
+                            <th>School</th>
+                            <th>Zone</th>
+                            <th>Status</th>
+                            <th>Verified</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.ListStud)
+                        {
+                            <tr>
+                                <td>@i.Prefix@i.StudID</td>
+                                <td>@i.FirstName @i.LastName</td>
+                                <td>@i.StdDetail.Standard</td>
+                                <td>@i.RollNo</td>
+                                <td>@i.SchlDetail.Name</td>
+                                <td>@i.ZoneDetail.Name</td>
+                                
+                                <td>@i.Status</td>
+                                <td>@i.Verified</td>
+                                <td>
+                                    @Html.ActionLink(" ", "Edit", new { @id = i.StudID }, new { @class = "fa fa-pencil-square fa-lg" })
+                                    @* @Html.ActionLink("Edit", "Edit", new { id = i.CompID })|
+                    @Html.ActionLink("Details", "Details", new { id = i.CompID }, new { @class = "viewDialog" }) |
+                    @Html.ActionLink("Delete", "DeleteRecord", new { id = i.CompID }, new { @class = "confirmDialog" })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!--end panel body-->
+        </div>
+        <!--end panel-->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Student Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                          @*  @Html.Label("* District", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.DID, new SelectList(Model.ListDist, "DID", "Name"), "--Select District--", new { @class = "form-control",@id="ddlDist" })
+                                @Html.ValidationMessageFor(m => m.DID)
+                            </div>*@
+                            @Html.Label("* City", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.CID, new SelectList(Model.ListCity, "CID", "Name"), "--Select City--", new { @class = "form-control",@id="ddlCity" })
+                                @Html.ValidationMessageFor(m => m.CID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("* Zone", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.ZID, new SelectList(Model.ListZone, "ZID", "Name"), "--Select Zone--", new { @class = "form-control",@id="ddlZone" })
+                                @Html.ValidationMessageFor(m => m.ZID)
+                            </div>
+                            @Html.Label("* School", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.SchoolID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control",@id="ddlSchool" })
+                                @Html.ValidationMessageFor(m => m.SchoolID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("* Standard", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.StdID, new SelectList(Model.ListStd, "StdID", "Standard"), "--Select Standard--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.StdID)
+                            </div>
+                            @Html.Label("Roll#", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.RollNo, new { @class = "form-control" })
+
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("* Name", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "* First Name" })
+                                @Html.ValidationMessageFor(m => m.FirstName)
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @placeholder = "Middle Name" })
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "* Last Name" })
+                                @Html.ValidationMessageFor(m => m.LastName)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("Father Name", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control" })
+
+                            </div>
+                            @Html.Label("Mother Name", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.MotherName, new { @class = "form-control" })
+
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("* DOB", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.DOB, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                                @Html.ValidationMessageFor(m => m.DOB)
+                            </div>
+                            @Html.Label("* Gender", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.RadioButtonFor(m => m.Gender, "1")Male
+                        @Html.RadioButtonFor(m => m.Gender, "2")Female
+                                    @Html.ValidationMessageFor(m => m.Gender)
+                            </div>
+                            @*<div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("Roll#", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.RollNo, new { @class = "form-control" })
+
+                            </div>*@
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("Photo", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                <input type="file" value="" id="fleLogo" name="fileLogo" class="btn btn-info btn-border" />
+
+                            </div>
+                            @Html.Label("Sign", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                <input type="file" value="" id="fleSign" name="fileSign" class="btn btn-info btn-border" />
+
+                            </div>
+
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            <div class="col-sm-2"></div>
+                            <div id="image-holder" class="col-sm-4 img-rounded"></div>
+                            <div class="col-sm-2"></div>
+                            <div id="image-holder1" class="col-sm-4 img-rounded"></div>
+
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("Thumb", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                <input type="file" value="" id="fleThumb" name="fileThumb" class="btn btn-info btn-border" />
+
+                            </div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            <div class="col-sm-2"></div>
+                            <div id="image-holder-thumb" class="col-sm-4 img-rounded"></div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            <div class="col-sm-12">
+                            <fieldset class="scheduler-border">
+                                <style>
+                                    #Checkboxlist1 tr
+                                    {
+                                        float: left;
+                                        margin-right: 20px;
+                                    }
+                                </style>
+                                <legend class="scheduler-border">Subject to be appear in :(Please <i class="fa fa-check"></i> tick the relevant subject)</legend>
+                                <table id="Checkboxlist1">
+                                    @for (var m = 0; m < Model.ListSub.Count(); m++)
+                                    {                                    
+                                        <tr>
+                                            <td>
+                                                @{var sub = Model.ListSub[m];
+                                    @Html.HiddenFor(model => model.ListSub[m].SubID)
+
+                                                <div class="checkbox checkbox-primary" style="position: relative;">
+                                                    @Html.CheckBoxFor(model => model.ListSub[m].IsChecked, new { @id = "chk",@style="margin-left:-5px;" })
+                                                    @*<i class="fa fa-user" aria-hidden="true"></i>*@
+                                                    @Html.LabelFor(model => model.ListSub[m].Subject, sub.Subject, new { @style = "font-weight: bold;" })&nbsp;&nbsp;&nbsp;
+                                                </div>}
+                                            </td>
+                                        </tr>
+                                                              
+                                    }
+                                </table>
+                            </fieldset>
+                                </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            <div id="dvStatus">
+                                <div class="col-sm-2"><b>Photo :</b></div>
+                                <div class="col-sm-2">
+                                    @if(Model.Photo!=null)
+                                    {
+                                    <img id="img" src="@Url.Content("/PhotoUpload/Photo/" + Model.Photo)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="photo" class="img-rounded thumb-image" width="100" height="100" />
+                                    }
+                                    else
+                                    {
+                                     <img id="img" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="photo" class="img-rounded thumb-image" width="100" height="100" />   
+                                    }
+                                </div>
+                                <div class="col-sm-2"><b>Sign :</b></div>
+
+                                <div class="col-sm-2">
+                                    @if(Model.Sign!=null)
+                                    {
+                                    <img id="img1" src="@Url.Content("/PhotoUpload/Sign/" + Model.Sign)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="sign" class="img-rounded thumb-image" width="100" height="100" />
+                                    }
+                                    else
+                                    {
+                                        <img id="img1" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="sign" class="img-rounded thumb-image" width="100" height="100" />
+                                    }
+                                </div>
+
+                                <div class="col-sm-2"><b>Thumb : </b></div>
+                                <div class="col-sm-2">
+                                    @if(Model.Thumb!=null)
+                                    {
+                                    <img id="img2" src="@Url.Content("/PhotoUpload/Thumb/" + Model.Thumb)" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="thumb" class="img-rounded thumb-image" width="100" height="100" />
+                                    }
+                                    else
+                                    {
+                                     <img id="img2" onError="this.onerror=null;this.src='/Images/noImage.png';" alt="thumb" class="img-rounded thumb-image" width="100" height="100" />   
+                                    }
+                                </div>
+                                <div class="col-sm-12" style="height: 5px;"></div>
+                                @Html.Label("Status", new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-4">
+                                    @Html.RadioButtonFor(m => m.Status, true)Active
+                        @Html.RadioButtonFor(m => m.Status, false)InActive
+                                </div>
+                                @Html.Label("Verified", new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-4">
+                                    @Html.RadioButtonFor(m => m.Verified, true)Yes
+                        @Html.RadioButtonFor(m => m.Verified, false)No
+                                </div>
+                                <div class="col-sm-12" style="height: 5px;"></div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+
+                                <input type="submit" value="Save" id="btnSave" name="cmd" class="btn btn-primary" />
+                                <input type="submit" value="Update" id="btnUpdate" name="cmd" class="btn btn-primary" />
+                                &nbsp;@*<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>*@
+                                <a href="/Registration/Index" class="btn btn-danger">Cancel</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--end col 6-->
+    
+  
+}
+
+@* @{
+     ERPEntities Dbcontext = new ERPEntities();
+     int uid = Convert.ToInt32(Session["UID"].ToString());
+var lst = Dbcontext.UserMasters.Where(m => m.UID == uid).SingleOrDefault();
+
+        <script lang="javascript" type="text/javascript">
+            $(document).ready(function () {
+                var id =@lst.DID
+                $("#ddlDist").prop("disabled", true);
+                //$("#ddlDist > [value=" + id + "]").attr("selected", "true");
+                $("#ddlDist").val(id);
+            });
+            </script>
+ }*@
+
+<script>
+    $("#fleSign").on('change', function () {
+
+        //Get count of selected files
+        var countFiles = $(this)[0].files.length;
+
+        var imgPath = $(this)[0].value;
+        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+        var image_holder = $("#image-holder1");
+        image_holder.empty();
+
+        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "gif") {
+            if (typeof (FileReader) != "undefined") {
+
+                //loop for each file selected for uploaded.
+                for (var i = 0; i < countFiles; i++) {
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                            "class": "img-rounded thumb-image"
+                        }).appendTo(image_holder);
+                    }
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[i]);
+                }
+
+            } else {
+                alert("This browser does not support FileReader.");
+            }
+        } else {
+            alert("Pls select only images");
+        }
+    });
+
+
+    $("#fleLogo").on('change', function () {
+
+        //Get count of selected files
+        var countFiles = $(this)[0].files.length;
+
+        var imgPath = $(this)[0].value;
+        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+        var image_holder = $("#image-holder");
+        image_holder.empty();
+
+        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "gif") {
+            if (typeof (FileReader) != "undefined") {
+
+                //loop for each file selected for uploaded.
+                for (var i = 0; i < countFiles; i++) {
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                            "class": "img-rounded thumb-image"
+                        }).appendTo(image_holder);
+                    }
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[i]);
+                }
+
+            } else {
+                alert("This browser does not support FileReader.");
+            }
+        } else {
+            alert("Pls select only images");
+        }
+    });
+
+
+    $("#fleThumb").on('change', function () {
+
+        //Get count of selected files
+        var countFiles = $(this)[0].files.length;
+
+        var imgPath = $(this)[0].value;
+        var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+        var image_holder = $("#image-holder-thumb");
+        image_holder.empty();
+
+        if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg" || extn == "gif") {
+            if (typeof (FileReader) != "undefined") {
+
+                //loop for each file selected for uploaded.
+                for (var i = 0; i < countFiles; i++) {
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<img />", {
+                            "src": e.target.result,
+                            "class": "img-rounded thumb-image"
+                        }).appendTo(image_holder);
+                    }
+
+                    image_holder.show();
+                    reader.readAsDataURL($(this)[0].files[i]);
+                }
+
+            } else {
+                alert("This browser does not support FileReader.");
+            }
+        } else {
+            alert("Pls select only images");
+        }
+    });
+</script>
+
+
+
+
+

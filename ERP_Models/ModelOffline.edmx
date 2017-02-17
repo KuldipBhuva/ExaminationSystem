@@ -1,0 +1,1017 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ERPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountingYear">
+          <Key>
+            <PropertyRef Name="AYID" />
+          </Key>
+          <Property Name="AYID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="CityMaster">
+          <Key>
+            <PropertyRef Name="CID" />
+          </Key>
+          <Property Name="CID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="350" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DistrictMaster">
+          <Key>
+            <PropertyRef Name="DID" />
+          </Key>
+          <Property Name="DID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="350" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExamMaster">
+          <Key>
+            <PropertyRef Name="EID" />
+          </Key>
+          <Property Name="EID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StdID" Type="int" />
+          <Property Name="ACID" Type="int" />
+          <Property Name="SchoolID" Type="int" />
+          <Property Name="CenterID" Type="int" />
+          <Property Name="Session" Type="varchar" MaxLength="250" />
+          <Property Name="Name" Type="varchar" MaxLength="350" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExamTran">
+          <Key>
+            <PropertyRef Name="ETID" />
+          </Key>
+          <Property Name="ETID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EID" Type="int" />
+          <Property Name="SchoolID" Type="int" />
+          <Property Name="SubID" Type="int" />
+          <Property Name="StdID" Type="int" />
+          <Property Name="ACID" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Timing" Type="varchar" MaxLength="250" />
+          <Property Name="TotalMarks" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="PassingMarks" Type="numeric" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="FormMaster">
+          <Key>
+            <PropertyRef Name="FID" />
+          </Key>
+          <Property Name="FID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MID" Type="int" />
+          <Property Name="FormName" Type="varchar" MaxLength="250" />
+          <Property Name="URL" Type="varchar" MaxLength="350" />
+          <Property Name="Description" Type="varchar" MaxLength="350" />
+          <Property Name="Sequence" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="ModuleMaster">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Module" Type="varchar" MaxLength="150" />
+          <Property Name="Description" Type="varchar" MaxLength="350" />
+          <Property Name="Icon" Type="varchar" MaxLength="250" />
+          <Property Name="Sequence" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="QRCodeMaster">
+          <Key>
+            <PropertyRef Name="QRID" />
+          </Key>
+          <Property Name="QRID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ETID" Type="int" />
+          <Property Name="EID" Type="int" />
+          <Property Name="StudID" Type="int" />
+          <Property Name="SubID" Type="int" />
+          <Property Name="SchoolID" Type="int" />
+          <Property Name="StdID" Type="int" />
+          <Property Name="QRCodeImage" Type="image" />
+          <Property Name="QRCode" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ResultMaster">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Name="RID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EID" Type="int" />
+          <Property Name="StudID" Type="int" />
+          <Property Name="SubID" Type="int" />
+          <Property Name="Marks" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RoleMaster">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Name="RID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="150" />
+          <Property Name="Description" Type="varchar" MaxLength="350" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SchoolMaster">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DID" Type="int" />
+          <Property Name="CID" Type="int" />
+          <Property Name="ZID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="350" />
+          <Property Name="CenterCode" Type="varchar" MaxLength="250" />
+          <Property Name="Prefix" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Phone" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="Pincode" Type="varchar" MaxLength="150" />
+          <Property Name="State" Type="varchar" MaxLength="150" />
+          <Property Name="Country" Type="varchar" MaxLength="150" />
+          <Property Name="Principal" Type="varchar" MaxLength="350" />
+          <Property Name="VicePrincipal" Type="varchar" MaxLength="350" />
+          <Property Name="Website" Type="varchar" MaxLength="350" />
+          <Property Name="Logo" Type="varchar" MaxLength="350" />
+          <Property Name="Sign" Type="varchar" MaxLength="350" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StandardMaster">
+          <Key>
+            <PropertyRef Name="StdID" />
+          </Key>
+          <Property Name="StdID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Standard" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StudentMaster">
+          <Key>
+            <PropertyRef Name="StudID" />
+          </Key>
+          <Property Name="StudID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Prefix" Type="varchar" MaxLength="50" />
+          <Property Name="DID" Type="int" />
+          <Property Name="CID" Type="int" />
+          <Property Name="ZID" Type="int" />
+          <Property Name="SchoolID" Type="int" />
+          <Property Name="StdID" Type="int" />
+          <Property Name="ACID" Type="int" />
+          <Property Name="FormNo" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="350" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="350" />
+          <Property Name="LastName" Type="varchar" MaxLength="350" />
+          <Property Name="FatherName" Type="varchar" MaxLength="500" />
+          <Property Name="MotherName" Type="varchar" MaxLength="500" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="RollNo" Type="varchar" MaxLength="50" />
+          <Property Name="Photo" Type="varchar" MaxLength="500" />
+          <Property Name="Sign" Type="varchar" MaxLength="500" />
+          <Property Name="Thumb" Type="varchar" MaxLength="500" />
+          <Property Name="Verified" Type="bit" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SubjectMaster">
+          <Key>
+            <PropertyRef Name="SubID" />
+          </Key>
+          <Property Name="SubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StdID" Type="int" />
+          <Property Name="Subject" Type="varchar" MaxLength="500" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SubTran">
+          <Key>
+            <PropertyRef Name="STID" />
+          </Key>
+          <Property Name="STID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudID" Type="int" />
+          <Property Name="SubID" Type="int" />
+          <Property Name="IsChecked" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserDistrictTran">
+          <Key>
+            <PropertyRef Name="UDTID" />
+          </Key>
+          <Property Name="UDTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="DID" Type="int" />
+          <Property Name="IsChecked" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserFormTran">
+          <Key>
+            <PropertyRef Name="UFTID" />
+          </Key>
+          <Property Name="UFTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="FID" Type="int" />
+          <Property Name="IsChecked" Type="bit" Nullable="false" />
+          <Property Name="AssignedBy" Type="int" />
+          <Property Name="AssignedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DID" Type="int" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="AccID" Type="int" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" />
+          <Property Name="UserName" Type="varchar" MaxLength="350" />
+          <Property Name="Password" Type="varchar" MaxLength="150" />
+          <Property Name="Mobile" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="City" Type="varchar" MaxLength="150" />
+          <Property Name="PostCode" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="150" />
+          <Property Name="DeviceID" Type="varchar" MaxLength="350" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="350" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CanLogin" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserModuleTran">
+          <Key>
+            <PropertyRef Name="UMTID" />
+          </Key>
+          <Property Name="UMTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="MID" Type="int" />
+          <Property Name="IsChecked" Type="bit" Nullable="false" />
+          <Property Name="AssignedBy" Type="int" />
+          <Property Name="AssignedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ZoneMaster">
+          <Key>
+            <PropertyRef Name="ZID" />
+          </Key>
+          <Property Name="ZID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DID" Type="int" />
+          <Property Name="CID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="350" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="ERPModelStoreContainer">
+          <EntitySet Name="AccountingYear" EntityType="Self.AccountingYear" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistrictMaster" EntityType="Self.DistrictMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamMaster" EntityType="Self.ExamMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamTran" EntityType="Self.ExamTran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormMaster" EntityType="Self.FormMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModuleMaster" EntityType="Self.ModuleMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QRCodeMaster" EntityType="Self.QRCodeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResultMaster" EntityType="Self.ResultMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleMaster" EntityType="Self.RoleMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolMaster" EntityType="Self.SchoolMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardMaster" EntityType="Self.StandardMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentMaster" EntityType="Self.StudentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectMaster" EntityType="Self.SubjectMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubTran" EntityType="Self.SubTran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDistrictTran" EntityType="Self.UserDistrictTran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFormTran" EntityType="Self.UserFormTran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserModuleTran" EntityType="Self.UserModuleTran" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZoneMaster" EntityType="Self.ZoneMaster" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ERPModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ERPEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountingYears" EntityType="ERPModel.AccountingYear" />
+          <EntitySet Name="ModuleMasters" EntityType="ERPModel.ModuleMaster" />
+          <EntitySet Name="RoleMasters" EntityType="ERPModel.RoleMaster" />
+          <EntitySet Name="UserFormTrans" EntityType="ERPModel.UserFormTran" />
+          <EntitySet Name="UserModuleTrans" EntityType="ERPModel.UserModuleTran" />
+          <EntitySet Name="CityMasters" EntityType="ERPModel.CityMaster" />
+          <EntitySet Name="DistrictMasters" EntityType="ERPModel.DistrictMaster" />
+          <EntitySet Name="StandardMasters" EntityType="ERPModel.StandardMaster" />
+          <EntitySet Name="StudentMasters" EntityType="ERPModel.StudentMaster" />
+          <EntitySet Name="SubjectMasters" EntityType="ERPModel.SubjectMaster" />
+          <EntitySet Name="ZoneMasters" EntityType="ERPModel.ZoneMaster" />
+          <EntitySet Name="FormMasters" EntityType="ERPModel.FormMaster" />
+          <EntitySet Name="QRCodeMasters" EntityType="ERPModel.QRCodeMaster" />
+          <EntitySet Name="SubTrans" EntityType="ERPModel.SubTran" />
+          <EntitySet Name="UserDistrictTrans" EntityType="ERPModel.UserDistrictTran" />
+          <EntitySet Name="ExamTrans" EntityType="ERPModel.ExamTran" />
+          <EntitySet Name="ResultMasters" EntityType="ERPModel.ResultMaster" />
+          <EntitySet Name="ExamMasters" EntityType="ERPModel.ExamMaster" />
+          <EntitySet Name="SchoolMasters" EntityType="ERPModel.SchoolMaster" />
+          <EntitySet Name="UserMasters" EntityType="ERPModel.UserMaster" />
+        </EntityContainer>
+        <EntityType Name="AccountingYear">
+          <Key>
+            <PropertyRef Name="AYID" />
+          </Key>
+          <Property Type="Int32" Name="AYID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Year" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+        </EntityType>
+        <EntityType Name="ModuleMaster">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Type="Int32" Name="MID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Module" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Icon" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Sequence" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+        </EntityType>
+        <EntityType Name="RoleMaster">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Type="Int32" Name="RID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Role" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserFormTran">
+          <Key>
+            <PropertyRef Name="UFTID" />
+          </Key>
+          <Property Type="Int32" Name="UFTID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UID" />
+          <Property Type="Int32" Name="FID" />
+          <Property Type="Boolean" Name="IsChecked" Nullable="false" />
+          <Property Type="Int32" Name="AssignedBy" />
+          <Property Type="DateTime" Name="AssignedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserModuleTran">
+          <Key>
+            <PropertyRef Name="UMTID" />
+          </Key>
+          <Property Type="Int32" Name="UMTID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UID" />
+          <Property Type="Int32" Name="MID" />
+          <Property Type="Boolean" Name="IsChecked" Nullable="false" />
+          <Property Type="Int32" Name="AssignedBy" />
+          <Property Type="DateTime" Name="AssignedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="CityMaster">
+          <Key>
+            <PropertyRef Name="CID" />
+          </Key>
+          <Property Type="Int32" Name="CID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DID" />
+          <Property Type="String" Name="Name" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="DistrictMaster">
+          <Key>
+            <PropertyRef Name="DID" />
+          </Key>
+          <Property Type="Int32" Name="DID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="StandardMaster">
+          <Key>
+            <PropertyRef Name="StdID" />
+          </Key>
+          <Property Type="Int32" Name="StdID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Standard" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="StudentMaster">
+          <Key>
+            <PropertyRef Name="StudID" />
+          </Key>
+          <Property Type="Int32" Name="StudID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Prefix" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DID" />
+          <Property Type="Int32" Name="CID" />
+          <Property Type="Int32" Name="ZID" />
+          <Property Type="Int32" Name="SchoolID" />
+          <Property Type="Int32" Name="StdID" />
+          <Property Type="Int32" Name="ACID" />
+          <Property Type="String" Name="FormNo" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FirstName" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MiddleName" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LastName" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FatherName" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MotherName" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Gender" />
+          <Property Type="DateTime" Name="DOB" Precision="0" />
+          <Property Type="String" Name="RollNo" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Photo" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Sign" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Thumb" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Verified" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="SubjectMaster">
+          <Key>
+            <PropertyRef Name="SubID" />
+          </Key>
+          <Property Type="Int32" Name="SubID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StdID" />
+          <Property Type="String" Name="Subject" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="ZoneMaster">
+          <Key>
+            <PropertyRef Name="ZID" />
+          </Key>
+          <Property Type="Int32" Name="ZID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DID" />
+          <Property Type="Int32" Name="CID" />
+          <Property Type="String" Name="Name" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="FormMaster">
+          <Key>
+            <PropertyRef Name="FID" />
+          </Key>
+          <Property Type="Int32" Name="FID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MID" />
+          <Property Type="String" Name="FormName" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="URL" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Sequence" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+        </EntityType>
+        <EntityType Name="QRCodeMaster">
+          <Key>
+            <PropertyRef Name="QRID" />
+          </Key>
+          <Property Type="Int32" Name="QRID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ETID" />
+          <Property Type="Int32" Name="StudID" />
+          <Property Type="Int32" Name="SubID" />
+          <Property Type="Binary" Name="QRCodeImage" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="QRCode" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SchoolID" />
+          <Property Type="Int32" Name="EID" />
+          <Property Type="Int32" Name="StdID" />
+        </EntityType>
+        <EntityType Name="SubTran">
+          <Key>
+            <PropertyRef Name="STID" />
+          </Key>
+          <Property Type="Int32" Name="STID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StudID" />
+          <Property Type="Int32" Name="SubID" />
+          <Property Type="Boolean" Name="IsChecked" />
+        </EntityType>
+        <EntityType Name="UserDistrictTran">
+          <Key>
+            <PropertyRef Name="UDTID" />
+          </Key>
+          <Property Type="Int32" Name="UDTID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UID" />
+          <Property Type="Int32" Name="DID" />
+          <Property Type="Boolean" Name="IsChecked" />
+        </EntityType>
+        <EntityType Name="ExamTran">
+          <Key>
+            <PropertyRef Name="ETID" />
+          </Key>
+          <Property Type="Int32" Name="ETID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EID" />
+          <Property Type="Int32" Name="SchoolID" />
+          <Property Type="Int32" Name="SubID" />
+          <Property Type="Int32" Name="StdID" />
+          <Property Type="Int32" Name="ACID" />
+          <Property Type="DateTime" Name="Date" Precision="0" />
+          <Property Type="String" Name="Timing" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="TotalMarks" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PassingMarks" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ResultMaster">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Type="Int32" Name="RID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EID" />
+          <Property Type="Int32" Name="StudID" />
+          <Property Type="Int32" Name="SubID" />
+          <Property Type="String" Name="Marks" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="ExamMaster">
+          <Key>
+            <PropertyRef Name="EID" />
+          </Key>
+          <Property Type="Int32" Name="EID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StdID" />
+          <Property Type="Int32" Name="ACID" />
+          <Property Type="Int32" Name="SchoolID" />
+          <Property Type="Int32" Name="CenterID" />
+          <Property Type="String" Name="Session" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Name" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="SchoolMaster">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Type="Int32" Name="SchoolID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DID" />
+          <Property Type="Int32" Name="CID" />
+          <Property Type="Int32" Name="ZID" />
+          <Property Type="String" Name="Name" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CenterCode" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Prefix" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Email" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="Phone" Precision="18" Scale="0" />
+          <Property Type="String" Name="Address" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Pincode" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="State" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Country" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Principal" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VicePrincipal" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Website" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Logo" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Sign" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="UpdatedBy" />
+          <Property Type="DateTime" Name="UpdatedDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="AccID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceID" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="IPAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CanLogin" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ERPModelStoreContainer" CdmEntityContainer="ERPEntities">
+          <EntitySetMapping Name="AccountingYears">
+            <EntityTypeMapping TypeName="ERPModel.AccountingYear">
+              <MappingFragment StoreEntitySet="AccountingYear">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="AYID" ColumnName="AYID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModuleMasters">
+            <EntityTypeMapping TypeName="ERPModel.ModuleMaster">
+              <MappingFragment StoreEntitySet="ModuleMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="MID" ColumnName="MID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleMasters">
+            <EntityTypeMapping TypeName="ERPModel.RoleMaster">
+              <MappingFragment StoreEntitySet="RoleMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RID" ColumnName="RID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFormTrans">
+            <EntityTypeMapping TypeName="ERPModel.UserFormTran">
+              <MappingFragment StoreEntitySet="UserFormTran">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+                <ScalarProperty Name="AssignedBy" ColumnName="AssignedBy" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="FID" ColumnName="FID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UFTID" ColumnName="UFTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserModuleTrans">
+            <EntityTypeMapping TypeName="ERPModel.UserModuleTran">
+              <MappingFragment StoreEntitySet="UserModuleTran">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+                <ScalarProperty Name="AssignedBy" ColumnName="AssignedBy" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="MID" ColumnName="MID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UMTID" ColumnName="UMTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityMasters">
+            <EntityTypeMapping TypeName="ERPModel.CityMaster">
+              <MappingFragment StoreEntitySet="CityMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistrictMasters">
+            <EntityTypeMapping TypeName="ERPModel.DistrictMaster">
+              <MappingFragment StoreEntitySet="DistrictMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardMasters">
+            <EntityTypeMapping TypeName="ERPModel.StandardMaster">
+              <MappingFragment StoreEntitySet="StandardMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Standard" ColumnName="Standard" />
+                <ScalarProperty Name="StdID" ColumnName="StdID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentMasters">
+            <EntityTypeMapping TypeName="ERPModel.StudentMaster">
+              <MappingFragment StoreEntitySet="StudentMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="Thumb" ColumnName="Thumb" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="FormNo" ColumnName="FormNo" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="StdID" ColumnName="StdID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="ZID" ColumnName="ZID" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="StudID" ColumnName="StudID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectMasters">
+            <EntityTypeMapping TypeName="ERPModel.SubjectMaster">
+              <MappingFragment StoreEntitySet="SubjectMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="StdID" ColumnName="StdID" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZoneMasters">
+            <EntityTypeMapping TypeName="ERPModel.ZoneMaster">
+              <MappingFragment StoreEntitySet="ZoneMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="ZID" ColumnName="ZID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormMasters">
+            <EntityTypeMapping TypeName="ERPModel.FormMaster">
+              <MappingFragment StoreEntitySet="FormMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="MID" ColumnName="MID" />
+                <ScalarProperty Name="FID" ColumnName="FID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QRCodeMasters">
+            <EntityTypeMapping TypeName="ERPModel.QRCodeMaster">
+              <MappingFragment StoreEntitySet="QRCodeMaster">
+                <ScalarProperty Name="StdID" ColumnName="StdID" />
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="QRCode" ColumnName="QRCode" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+                <ScalarProperty Name="StudID" ColumnName="StudID" />
+                <ScalarProperty Name="ETID" ColumnName="ETID" />
+                <ScalarProperty Name="QRID" ColumnName="QRID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubTrans">
+            <EntityTypeMapping TypeName="ERPModel.SubTran">
+              <MappingFragment StoreEntitySet="SubTran">
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+                <ScalarProperty Name="StudID" ColumnName="StudID" />
+                <ScalarProperty Name="STID" ColumnName="STID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDistrictTrans">
+            <EntityTypeMapping TypeName="ERPModel.UserDistrictTran">
+              <MappingFragment StoreEntitySet="UserDistrictTran">
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="UDTID" ColumnName="UDTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamTrans">
+            <EntityTypeMapping TypeName="ERPModel.ExamTran">
+              <MappingFragment StoreEntitySet="ExamTran">
+                <ScalarProperty Name="PassingMarks" ColumnName="PassingMarks" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="Timing" ColumnName="Timing" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="StdID" ColumnName="StdID" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="ETID" ColumnName="ETID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResultMasters">
+            <EntityTypeMapping TypeName="ERPModel.ResultMaster">
+              <MappingFragment StoreEntitySet="ResultMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Marks" ColumnName="Marks" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+                <ScalarProperty Name="StudID" ColumnName="StudID" />
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="RID" ColumnName="RID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamMasters">
+            <EntityTypeMapping TypeName="ERPModel.ExamMaster">
+              <MappingFragment StoreEntitySet="ExamMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
+                <ScalarProperty Name="CenterID" ColumnName="CenterID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="StdID" ColumnName="StdID" />
+                <ScalarProperty Name="EID" ColumnName="EID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolMasters">
+            <EntityTypeMapping TypeName="ERPModel.SchoolMaster">
+              <MappingFragment StoreEntitySet="SchoolMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="VicePrincipal" ColumnName="VicePrincipal" />
+                <ScalarProperty Name="Principal" ColumnName="Principal" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="CenterCode" ColumnName="CenterCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ZID" ColumnName="ZID" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="ERPModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CanLogin" ColumnName="CanLogin" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,175 @@
+﻿@using ERP_Models.ViewModel
+@model ExamModel
+
+<div class="col-sm-12" style="border: solid 1px; box-shadow: 1px 1px 10px 1px grey; padding-top: 8px;">
+
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Exam Details</legend>
+        <label class="col-sm-3 control-label"><b>Name : </b></label>
+        <div class="col-sm-3">@Model.Name</div>
+        <label class="col-sm-3 control-label"><b>Session : </b></label>
+        <div class="col-sm-3">@Model.Session</div>
+
+        @*    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Consigner : </label>
+    <div class="col-sm-3">@Model.ConsignorDetails.PartyName</div>
+    <label class="col-sm-3 control-label">Consignee : </label>
+    <div class="col-sm-3">@Model.ConsigneeDetails.PartyName</div>
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Source : </label>
+    <div class="col-sm-3">@Model.Source</div>
+    <label class="col-sm-3 control-label">Destination : </label>
+    <div class="col-sm-3">@Model.Destination</div>
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Company/Broker : </label>
+    <div class="col-sm-3">@Model.CompBrokeDetails.PartyName</div>
+
+    <label class="col-sm-3 control-label">Pick Up Point : </label>
+    <div class="col-sm-3">@Model.PickUp</div>
+
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Tax Paid By : </label>
+    @if (@Model.TaxPaidBy == 1)
+    {
+        <div class="col-sm-3">Consigner</div>
+    }
+    else if (@Model.TaxPaidBy == 2)
+    {
+        <div class="col-sm-3">Consignee</div>
+    }
+    else if (@Model.TaxPaidBy == 3)
+    {
+        <div class="col-sm-3">Transporter</div>
+    }
+    else
+    {
+        <div class="col-sm-3">-</div>   
+    }
+    <label class="col-sm-3 control-label">Delivery Mode : </label>
+    @if (@Model.DeliveryMode == 1)
+    {
+        <div class="col-sm-3">Cash On Delivery</div>
+    }
+    else if (@Model.DeliveryMode == 2)
+    {
+        <div class="col-sm-3">Delivery</div>
+    }
+    else if (@Model.DeliveryMode == 3)
+    {
+        <div class="col-sm-3">Cheque on Delivery</div>
+    }
+    else
+    {
+        <div class="col-sm-3">-</div>
+    }
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Consignee Invoice No. : </label>
+    <div class="col-sm-3">@Model.ConsigneeInvoiceNo</div>
+    <label class="col-sm-3 control-label">Consignee Invoice Value : </label>
+    <div class="col-sm-3">@Model.ConsigneeInvoiceValue</div>
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">No. of Packages : </label>
+    <div class="col-sm-3">@Model.Packages</div>
+    <label class="col-sm-3 control-label">Packing Method : </label>
+    <div class="col-sm-3">@Model.PackingMethod</div>
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Actual Weight(KG) : </label>
+    <div class="col-sm-3">@Model.ActualWeight KG</div>
+    <label class="col-sm-3 control-label">Charged Weight(KG) : </label>
+    <div class="col-sm-3">@Model.ChargedWeight KG</div>
+
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Rate(Per KG) : </label>
+    <div class="col-sm-3"><i class="fa fa-inr">&nbsp;@Model.Rate</i></div>
+    <label class="col-sm-3 control-label">Freight Charge : </label>
+    <div class="col-sm-3"><i class="fa fa-inr">&nbsp;@Model.FreightCharge</i></div>
+
+      <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Labour Charge : </label>
+    @if(Model.LabourCharge!=null)
+    {
+    <div class="col-sm-3"><i class="fa fa-inr">&nbsp;@Model.LabourCharge</i></div>
+    }
+    else
+    {
+        <div class="col-sm-3"><i class="fa fa-inr">&nbsp;0.0</i></div>
+    }
+    <label class="col-sm-3 control-label">Other Charge : </label>
+    @if(@Model.OtherCharge!=null)
+    {
+    <div class="col-sm-3"><i class="fa fa-inr">&nbsp;@Model.OtherCharge</i></div>
+    }
+    else
+    {
+        <div class="col-sm-3"><i class="fa fa-inr">&nbsp;0.0</i></div>
+    }
+
+     <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Discount : </label>
+    @if(Model.Discount!=null)
+    {
+    <div class="col-sm-3"><i class="fa fa-inr">&nbsp;@Model.Discount</i></div>
+    }
+    else
+    {
+        <div class="col-sm-3"><i class="fa fa-inr">&nbsp;0.0</i></div>
+    }
+    <label class="col-sm-3 control-label">Booking Date : </label>
+    @if(@Model.BookingDate!=null)
+    {
+    <div class="col-sm-3">@Model.BookingDate.Value.ToString("dd/MM/yyyy")</div>
+    }
+    else
+    {
+    <div class="col-sm-3">-</div>    
+    }   
+    
+    <div class="col-sm-12" style="height: 5px;"></div>
+
+    <label class="col-sm-3 control-label">Invoice No. : </label>
+    <div class="col-sm-3">@Model.InvoiceNo@Model.GrNo</div>
+    <label class="col-sm-3 control-label">Invoice Amount : </label>
+    <div class="col-sm-3"><i class="fa fa-inr">&nbsp;@Model.InvoiceAmount</i></div>   *@
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Exam Schedule</legend>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Timing</th>
+                    <th>Total</th>
+                    <th>Passing</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.ListSchedule)
+                {                    
+                    <tr>
+                        <td>@i.Date.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@i.Timing</td>
+                        <td>@i.TotalMarks</td>
+                        <td>@i.PassingMarks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
+</div>
+

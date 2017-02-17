@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="67b76922dc2647d180b14979fc337755" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="ERPModel.AccountingYear" Width="1.5" PointX="6.8685440918749867" PointY="28.124804271443189" />
+        <EntityTypeShape EntityType="ERPModel.ModuleMaster" Width="1.5" PointX="0.55194468635690619" PointY="13.041112086289148" />
+        <EntityTypeShape EntityType="ERPModel.RoleMaster" Width="1.5" PointX="9.3217324061886089" PointY="12.127906030103521" />
+        <EntityTypeShape EntityType="ERPModel.UserFormTran" Width="1.5" PointX="4.7867837905822244" PointY="23.777147587284979" />
+        <EntityTypeShape EntityType="ERPModel.UserModuleTran" Width="1.5" PointX="2.75" PointY="17.5" />
+        <EntityTypeShape EntityType="ERPModel.CityMaster" Width="1.5" PointX="5.09732756442266" PointY="20.162405142636228" />
+        <EntityTypeShape EntityType="ERPModel.DistrictMaster" Width="1.5" PointX="11.806973380878089" PointY="24.928557169124744" />
+        <EntityTypeShape EntityType="ERPModel.StandardMaster" Width="1.5" PointX="9.1003500824330139" PointY="5.80442804368419" />
+        <EntityTypeShape EntityType="ERPModel.StudentMaster" Width="1.5" PointX="6.1425355962210038" PointY="24.585402887587158" />
+        <EntityTypeShape EntityType="ERPModel.SubjectMaster" Width="1.5" PointX="7.3195582811346078" PointY="8.6552281867038587" />
+        <EntityTypeShape EntityType="ERPModel.ZoneMaster" Width="1.5" PointX="6.352533686138937" PointY="12.565605586658048" />
+        <EntityTypeShape EntityType="ERPModel.FormMaster" Width="1.5" PointX="11.575815807830457" PointY="31.101905017672994" />
+        <EntityTypeShape EntityType="ERPModel.QRCodeMaster" Width="1.5" PointX="7.2538364712399606" PointY="5.8162941512727615" />
+        <EntityTypeShape EntityType="ERPModel.SubTran" Width="1.5" PointX="2.4623840332321745" PointY="25.811454933980226" />
+        <EntityTypeShape EntityType="ERPModel.UserDistrictTran" Width="1.5" PointX="0.68069993922519489" PointY="15.563420899009062" />
+        <EntityTypeShape EntityType="ERPModel.ExamTran" Width="1.5" PointX="5.1299100281344305" PointY="24.799930673465102" />
+        <EntityTypeShape EntityType="ERPModel.ResultMaster" Width="1.5" PointX="6.3653089415120476" PointY="4.728546308692799" />
+        <EntityTypeShape EntityType="ERPModel.ExamMaster" Width="1.5" PointX="8.6840527805891128" PointY="8.8112159859441288" />
+        <EntityTypeShape EntityType="ERPModel.SchoolMaster" Width="1.5" PointX="9.3339789590490874" PointY="15.677356116323432" />
+        <EntityTypeShape EntityType="ERPModel.UserMaster" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

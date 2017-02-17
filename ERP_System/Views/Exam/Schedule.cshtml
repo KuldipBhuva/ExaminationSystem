@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Exam Schedule";
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model ExamModel
+
+@using (@Html.BeginForm("Schedule", "Exam", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m=>m.ExamDetails.EID)
+    @Html.HiddenFor(m=>m.ExamDetails.StdID)
+    @Html.HiddenFor(m=>m.ExamDetails.SchoolID)
+
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Schedule</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <h2 class="panel-title">Schedule for @Model.ExamDetails.Name of @Model.SchoolMastDetail.Name (Standard : @Model.StdDetail.Standard)</h2>
+            </header> 
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sr.#</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Timing</th>
+                            <th>Total Marks</th>
+                            <th>Passing Marks</th>
+                        </tr>
+                    </thead>
+                    @{int count = 0;}
+                    <tbody>
+                        @for (var s = 0; s < Model.ListSub.Count(); s++)
+                        {
+                            count++;
+
+                            var sub = Model.ListSub[s];
+                            @Html.HiddenFor(model => model.ListSub[s].SubID) 
+                            @Html.HiddenFor(model => model.ListSub[s].ETID)                                                    
+                            <tr>
+                                <td>@count</td>
+                                <td>@sub.Subject</td>
+                                <td>@Html.TextBoxFor(m => m.ListSub[s].Date, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })</td>
+                                <td>@Html.TextBoxFor(m => m.ListSub[s].Timing, new { @class = "form-control" })</td>
+                                <td>@Html.TextBoxFor(m => m.ListSub[s].TotalMarks, new { @class = "form-control" })</td>
+                                <td>@Html.TextBoxFor(m => m.ListSub[s].PassingMarks, new { @class = "form-control" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="col-sm-12" style="height: 5px;"></div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+
+                    <input type="submit" value="Save" id="btnSave" name="cmd" class="btn btn-primary" />
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

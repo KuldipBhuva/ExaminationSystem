@@ -1,0 +1,201 @@
+﻿@{
+    ViewBag.Title = "Exam Master";
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model ExamModel
+
+@using (@Html.BeginForm("Index", "Exam", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+
+    if (Model.EID != null && Model.EID != 0)
+    {
+    @Html.HiddenFor(m => m.EID)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.CreatedDate)    
+    @Html.HiddenFor(m => m.ACID)
+    
+    }
+    int rid = 0;
+    if (Session["RoleID"] != null)
+    { rid = Convert.ToInt32(Session["RoleID"].ToString()); }
+        
+    
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>Exam</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+    
+    <!--end col 6-->
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+
+                    @*<a href="javascript:void(0)" class="panel-action action-link btn btn-primary btn-border" ><i class="fa fa-plus-square">&nbsp;ADD NEW</i></a>*@
+
+                    @*<button type="button" class="btn btn-success btn-border">Add New</button>*@
+                    <button type="button" class="btn btn-success btn-border" id="btnAdd" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Add New</button>
+                    @*@Html.ActionLink("Create New", "AddEditRecord", "Company", null, new { @id = "openDialog", @class = "btn btn-success btn-border" })*@
+                    @*        <a href="javascript:void(0)" class="panel-action panel-action-toggle" data-panel-toggle=""></a>
+                    <a href="javascript:void(0)" class="panel-action panel-action-dismiss" data-panel-dismiss=""></a>*@
+                    @*<div class="dropdown pull-left">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="ion-more"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-scale">
+                            <li><a href="javascript:void(0)">Action</a></li>
+                            <li><a href="javascript:void(0)">Just Action</a></li>
+                            <li><a href="javascript:void(0)">Action Now</a></li>
+                        </ul>
+                    </div>*@
+                </div>
+                <h2 class="panel-title">Exam List</h2>
+            </header>
+            <div class="panel-body">
+                <table class="table" id="tbl">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Session</th>
+                            <th>School</th>
+                            <th>Standard</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.ListExam)
+                        {
+                            <tr>
+                                <td>@i.Name</td>
+                                <td>@i.Session</td>
+                                <td>@i.SchoolDetail.Name</td>
+                                <td>@i.StandardDetail.Standard</td>
+                                <td>
+                                    @Html.ActionLink(" ", "Edit", new { @id = i.EID }, new { @class = "fa fa-pencil-square fa-lg", @title = "Exam Edit" })
+                                    @*@Html.ActionLink(" ", "Schedule", new { @id = i.EID }, new { @class = "fa fa-calendar fa-lg", @title = "Exam Schedule" })*@
+                                    <div class="dropdown" style="display:-webkit-inline-box;">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <i class="fa fa-print">&nbsp;Print</i>
+  <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @*<li>&nbsp;@Html.ActionLink(" QR Code", "QRCode", new { @id = i.EID }, new { @class = "fa fa-qrcode", @target = "_blank", @title = "Generate QRCode" })</li>*@
+                                            <li>&nbsp;@Html.ActionLink(" BarCode", "BarCode", new { @id = i.EID }, new { @class = "fa fa-barcode", @target = "_blank", @title = "Generate BarCode" })</li>
+                                            <li>&nbsp;@Html.ActionLink(" Examination Form", "ExamForm", new { @id = i.EID }, new { @class = "fa fa-file-text-o", @target = "_blank", @title = "Generate Examination Form" })</li>
+                                            <li>&nbsp;@Html.ActionLink(" Admit Card", "AdmitCard", new { @id = i.EID }, new { @class = "fa fa-book", @target = "_blank", @title = "Generate Admit Card" })</li>
+                                            <li>&nbsp;@Html.ActionLink(" Attendance Sheet", "AtteSheet", new { @id = i.EID }, new { @class = "fa fa-table", @target = "_blank", @title = "Generate Attendance Sheet" })</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    
+                                    @* @Html.ActionLink("Edit", "Edit", new { id = i.CompID })|
+                    @Html.ActionLink("Details", "Details", new { id = i.CompID }, new { @class = "viewDialog" }) |
+                    @Html.ActionLink("Delete", "DeleteRecord", new { id = i.CompID }, new { @class = "confirmDialog" })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!--end panel body-->
+        </div>
+        <!--end panel-->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Exam Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+
+                            @Html.Label("* City", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.CID, new SelectList(Model.ListCity, "CID", "Name"), "--Select City--", new { @class = "form-control", @id = "ddlCity" })
+                                @Html.ValidationMessageFor(m => m.CID)
+                            </div>
+                            @Html.Label("* Zone", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.ZID, new SelectList(Model.ListZone, "ZID", "Name"), "--Select Zone--", new { @class = "form-control", @id = "ddlZone" })
+                                @Html.ValidationMessageFor(m => m.ZID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+
+                            @Html.Label("* School", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.SchoolID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control", @id = "ddlSchool" })
+                                @Html.ValidationMessageFor(m => m.SchoolID)
+                            </div>
+                            @Html.Label("* Standard", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.StdID, new SelectList(Model.ListStd, "StdID", "Standard"), "--Select Standard--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.StdID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+
+                            @Html.Label("* Exam Name", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Name)
+                            </div>
+                            @Html.Label("* Session", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(m => m.Session, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Session)
+                            </div>
+
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                             @Html.Label("Center", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.CenterID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control", @id = "ddlSchool" })
+                                
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            <div id="dvStatus">
+                                @Html.Label("Status", new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-4">
+                                    @Html.RadioButtonFor(m => m.Status, true)Active
+                        @Html.RadioButtonFor(m => m.Status, false)InActive
+                                </div>
+                                <div class="col-sm-12" style="height: 5px;"></div>
+                            </div>
+                            <div class="col-sm-12" style="height: 15px;"></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+
+                                <input type="submit" value="Save" id="btnSave" name="cmd" class="btn btn-primary" />
+                                <input type="submit" value="Update" id="btnUpdate" name="cmd" class="btn btn-primary" />
+                                <a href="/Exam/Index" class="btn btn-danger">Cancel</a>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--end col 6-->
+    
+  
+}
+
+
+
+
+

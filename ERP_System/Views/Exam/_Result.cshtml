@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+@using ERP_Models.ViewModel
+@using ERP_Models
+@model ExamModel
+
+<div class="col-sm-12" style="box-shadow: 1px 1px 10px 1px grey; padding-top: 15px;padding-bottom:15px;">
+    @Html.HiddenFor(m=>m.StudID)
+    @Html.HiddenFor(m=>m.EID)
+    @Html.HiddenFor(m=>m.SubID)
+    @*@Html.Label(@Model.SubDetail.Subject, new { @class = "col-sm-2 control-label" ,@style="font-weight:bold;"})*@
+    <div class="col-sm-2">
+    <h3><span class="lable label-info">&nbsp;@Model.SubDetail.Subject&nbsp;</span></h3>
+        </div>
+    <div class="input-group col-sm-4">    
+        @if(@Model.ResultDetail!=null)
+        {    
+        @Html.TextBoxFor(m => m.Marks,@Model.ResultDetail.Marks, new { @class = "form-control" ,@value=@Model.ResultDetail.Marks})
+        }
+        else
+        {
+            @Html.TextBoxFor(m => m.Marks, new { @class = "form-control" })
+        }
+        <span class="input-group-btn">
+            <button class="btn btn-info" type="submit">Save!</button>
+        </span>
+    </div>
+    <br />
+    <table class="table">
+        <tr>
+            <td>
+                <b>Subject : </b>
+            </td>
+            <td>@Model.SubDetail.Subject</td>
+            <td><b>Standard : </b></td><td>@Model.StdDetail.Standard</td>
+            
+        </tr>
+        <tr>
+            <td><b>Candidate Name : </b></td><td>@Model.StudDetail.FirstName @Model.StudDetail.MiddleName @Model.StudDetail.LastName</td>
+            <td></td><td></td>
+        </tr>
+    </table>    
+</div>

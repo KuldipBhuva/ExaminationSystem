@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "QR Code Sheet";
+}
+@using ERP_Models.ViewModel
+@model QRModel
+@using (@Html.BeginForm("Index", "QRCode", FormMethod.Post, new { @id = "frmComp", enctype = "multipart/form-data" }))
+{
+    <!-- **Breadcrumb Section** -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            @*<h3>Company</h3>*@
+            <div class="breadcrumb">
+                <a href="/Dashboard/Index" title="">Home</a> / <span>QR Code</span>
+            </div>
+        </div>
+    </div>
+    <!-- **Breadcrumb Section Ends** -->
+
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+
+                    @*<a href="javascript:void(0)" class="panel-action action-link btn btn-primary btn-border" ><i class="fa fa-plus-square">&nbsp;ADD NEW</i></a>*@
+
+                    @*<button type="button" class="btn btn-success btn-border">Add New</button>*@
+                    @*<button type="button" class="btn btn-success btn-border" id="btnAdd" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Add New</button>*@
+
+
+
+                </div>
+            </header>
+            <div class="panel-body">
+                @Html.Label("* School", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.SchoolID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.SchoolID)
+                            </div>
+                            @Html.Label("* Standard", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.StdID, new SelectList(Model.ListStd, "StdID", "Standard"), "--Select Standard--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.StdID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("* Exam", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.EID, new SelectList(Model.ListExam, "EID", "Name"), "--Select Exam--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.EID)
+                            </div>
+                <div class="col-sm-12" style="height: 5px;"></div>
+                <div id="dvExamView">
+                </div>
+                 <div class="col-sm-12" style="height: 5px;"></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+
+                                <input type="submit" value="Save" id="btnSave" name="cmd" class="btn btn-primary" />
+                                <input type="submit" value="Update" id="btnUpdate" name="cmd" class="btn btn-primary" />
+                                &nbsp;@*<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>*@
+                                <a href="/QRCode/Index" class="btn btn-danger">Cancel</a>
+                            </div>
+                <div class="col-sm-12" style="height: 5px;"></div>
+                <div class="col-sm-12">
+                @foreach (var i in Model.ListQR)
+                {
+          
+
+                    
+               
+                    var base64 = Convert.ToBase64String(@i.QRCodeImage);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+
+                    <img src="@imgSrc" height="150px" width="150px"/>
+                }
+                    </div>
+                @*<img src="@Url.Action("getImg", "Person", new { id = @i.QRID })" alt="Person Image" />*@
+            </div>
+        </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">QR Code Sheet Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            @Html.Label("* School", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.ScID, new SelectList(Model.ListSchool, "SchoolID", "Name"), "--Select School--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ScID)
+                            </div>
+                            @Html.Label("* Standard", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.StdID, new SelectList(Model.ListStd, "StdID", "Standard"), "--Select Standard--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.StdID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            @Html.Label("* Exam", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(m => m.EID, new SelectList(Model.ListExam, "EID", "Name"), "--Select Exam--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.EID)
+                            </div>
+                            <div class="col-sm-12" style="height: 5px;"></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+
+                               @* <input type="submit" value="Save" id="btnSave" name="cmd" class="btn btn-primary" />
+                                <input type="submit" value="Update" id="btnUpdate" name="cmd" class="btn btn-primary" />*@
+                                &nbsp;@*<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>*@
+                                <a href="/QRCode/Index" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+ 
+    
+}
+
+<script lang="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        $("#EID").change(function () {
+            $("#divLoading").show();
+            debugger;
+            var id = $('#EID').val();
+            $.ajax(
+            {
+                url: '@Url.Action("getExamDetail", "QRCode")',
+                type: "GET",
+                datatype: "JSON",
+                data: { eid: id },
+
+                success: function (gr) {
+                    debugger;
+                    $("#dvExamView").html("");  // clear before appending new list 
+                    $("#dvExamView").append(gr);
+                    $("#divLoading").hide();
+                }
+            });
+
+        });
+        $("#divLoading").hide();
+    });
+</script>
